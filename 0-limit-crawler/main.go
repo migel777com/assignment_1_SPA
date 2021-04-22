@@ -36,7 +36,7 @@ func Crawl(url string, depth int, wg *sync.WaitGroup, ticker <- chan time.Time) 
 
 	wg.Add(len(urls))
 	for _, u := range urls {
-		<-ticker
+		<-ticker//taking value from the channel (1 second)
 		// Do not remove the `go` keyword, as Crawl() must be
 		// called concurrently
 		go Crawl(u, depth-1, wg, ticker)
@@ -46,9 +46,9 @@ func Crawl(url string, depth int, wg *sync.WaitGroup, ticker <- chan time.Time) 
 
 func main() {
 	var wg sync.WaitGroup
-	ticker := time.Tick(rateLimit)
+	ticker := time.Tick(rateLimit) //created ticker for time control
 
 	wg.Add(1)
-	Crawl("http://golang.org/", 4, &wg, ticker)
+	Crawl("http://golang.org/", 4, &wg, ticker) //passing ticker to the function
 	wg.Wait()
 }
