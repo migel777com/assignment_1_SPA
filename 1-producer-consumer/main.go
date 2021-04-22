@@ -27,7 +27,7 @@ func producer(stream Stream) (tweets []*Tweet) {
 	}
 }
 
-func writer(stream Stream, ch chan Tweet) {
+func writer(stream Stream, ch chan Tweet) { // new functiong for writing to channel
 	for {
 		tweet, err := stream.Next()
 		if err == ErrEOF {
@@ -49,7 +49,7 @@ func consumer(tweets []*Tweet) {
 	}
 }
 
-func listener(ch chan Tweet, wg *sync.WaitGroup) {
+func listener(ch chan Tweet, wg *sync.WaitGroup) { // new function for listening tweets from channel
 	defer wg.Done()
 	for {
 		t := <-ch
@@ -84,7 +84,7 @@ func main() {
 	fmt.Printf("Process took %s\n", time.Since(start))
 }
 
-
+// I took all functions and structs from mockstream file to check my work
 // GetMockStream is a blackbox function which returns a mock stream for
 // demonstration purposes
 func GetMockStream() Stream {
